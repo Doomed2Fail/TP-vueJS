@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>TP1C - Tableau de notes</title>
+</head>
+<body>
+
+  <div id="app">
+
+    <h1>Tableau de notes</h1>
+
+    <div style="border: 1px solid black; padding: 15px; margin-bottom: 15px;">
+      <h2>Résultats du semestre</h2>
+
+      <div v-if="modules.length > 0">
+        <p>Moyenne générale : {{ moyenneGenerale.toFixed(2) }} / 20</p>
+
+        <p v-if="moyenneGenerale >= 16">Mention : Très bien</p>
+        <p v-else-if="moyenneGenerale >= 14">Mention : Bien</p>
+        <p v-else-if="moyenneGenerale >= 12">Mention : Assez bien</p>
+        <p v-else-if="moyenneGenerale >= 10">Mention : Passable</p>
+        <p v-else>Insuffisant</p>
+
+        <p v-if="moduleMax">
+          Meilleur module : {{ moduleMax.nom }} — {{ moduleMax.note }} / 20
+        </p>
+
+        <p v-if="moduleMin">
+          Moins bon module : {{ moduleMin.nom }} — {{ moduleMin.note }} / 20
+        </p>
+
+        <p v-if="tousValides()">Tous les modules sont validés.</p>
+      </div>
+
+      <p v-else>Aucun module : ajoute une première note.</p>
+    </div>
+
+    <div style="border: 1px solid black; padding: 15px; margin-bottom: 15px;">
+      <h2>Modules à rattraper : {{ modulesARattraper.length }}</h2>
+
+      <div v-if="modulesARattraper.length > 0">
+        <p v-for="module in modulesARattraper" :key="module.id">
+          {{ module.nom }} : {{ module.note }} / 20
+        </p>
+      </div>
+
+      <p v-else>Aucun module à rattraper.</p>
+    </div>
+
+    <div style="border: 1px solid black; padding: 15px; margin-bottom: 15px;">
+      <h2>Ajouter un module</h2>
+
+      <form @submit.prevent="ajouterModule">
+
+        <label>
+          Nom :
+          <input type="text" v-model.trim="nouveauModule.nom" required>
+        </label>
+
+        <label>
+          Note sur 20 :
+          <input
+            type="number"
+            v-model.number="nouveauModule.note"
+            min="0"
+            max="20"
+            step="0.01"
+            required
+          >
+        </label>
+
+        <label>
+          Coefficient :
+          <input
+            type="number"
+            v-model.number="nouveauModule.coefficient"
+            min="0.01"
+            step="0.01"
+            required
+          >
+        </label>
+
+        <button type="submit">Ajouter</button>
+      </form>
+
+      <p v-if="erreur" style="color: red;">{{ erreur }}</p>
+    </div>
+
+    <div style="border: 1px solid black; padding: 15px;">
+      <h2>Classement des modules</h2>
+
+      <label>
+        Recherche :
+        <input type="text" v-model="recherche">
+      </label>
+
+      <div
+        v-for="module in modulesAffiches"
+        :key="module.id"
+        style="border: 1px solid gray; padding: 10px; margin-top: 15px;"
+      >
+        <h3>{{ module.nom }} : {{ module.note }} / 20</h3>
+
+        <div>
+          <button @click="toggleDetail(module)">Détails</button>
+          <button @click="supprimerModule(module)">Supprimer</button>
+        </div>
+
+        <div
+          v-show="detailOuvert === module.id"
+          style="border: 1px dashed gray; padding: 10px; margin-top: 10px;"
+        >
+          <p>Coefficient : {{ module.coefficient }}</p>
+          <p>
+            Note pondérée :
+            {{ (module.note * module.coefficient).toFixed(2) }}
+          </p>
+        </div>
+      </div>
+
+      <p v-if="modulesAffiches.length === 0">
+        Aucun module trouvé.
+      </p>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
