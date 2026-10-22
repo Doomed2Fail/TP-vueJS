@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>TP3 - Gestion de tâches</title>
+
+  <style>
+    .active {
+      background-color: lightblue;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <h1>Gestion de tâches</h1>
+
+    <p>Nombre total de tâches : {{ nombreTotal }}</p>
+
+    <button
+      @click="filtre = 'toutes'"
+      :class="{ active: filtre === 'toutes' }"
+    >
+      Toutes
+    </button>
+
+    <button
+      @click="filtre = 'aFaire'"
+      :class="{ active: filtre === 'aFaire' }"
+    >
+      À faire
+    </button>
+
+    <button
+      @click="filtre = 'terminees'"
+      :class="{ active: filtre === 'terminees' }"
+    >
+      Terminées
+    </button>
+
+    <div v-for="tache in tachesFiltrees" :key="tache.id">
+      <h2>{{ tache.title }}</h2>
+      <p>{{ tache.description }}</p>
+
+      <p v-if="tache.completed">Terminée</p>
+      <p v-else>À faire</p>
+
+      <button
+        v-show="!tache.completed"
+        @click="terminer(tache)"
+      >
+        Marquer comme terminée
+      </button>
+
+      <hr>
+    </div>
+
+    <p v-if="tachesFiltrees.length === 0">
+      Aucune tâche à afficher.
+    </p>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

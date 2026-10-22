@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>TP2 - Liste de personnes</title>
+</head>
+<body>
+
+  <div id="app">
+
+    <h1>Liste de personnes</h1>
+
+    <div>
+      <p>Rechercher par nom ou prénom :</p>
+      <input type="text" v-model="filtreNom">
+    </div>
+
+    <div>
+      <p>Afficher :</p>
+
+      <label>
+        <input type="checkbox" v-model="homme">
+        Homme
+      </label>
+
+      <label>
+        <input type="checkbox" v-model="femme">
+        Femme
+      </label>
+
+      <label>
+        <input type="checkbox" v-model="tel">
+        Téléphone
+      </label>
+    </div>
+
+    <div>
+      <p>Taille des photos :</p>
+
+      <select v-model="taille">
+        <option :value="1">Petit</option>
+        <option :value="2">Moyen</option>
+        <option :value="3">Grand</option>
+      </select>
+    </div>
+
+    <div>
+      <label>
+        <input type="checkbox" v-model="mef">
+        Mise en forme
+      </label>
+    </div>
+
+    <p>{{ personnesFiltrees.length }} personne(s) affichée(s)</p>
+
+    <div
+      v-for="p in personnesFiltrees"
+      :key="p.id"
+      :class="{ misEnForme: mef }"
+    >
+      <img :src="photo(p)" :alt="p.name.first">
+
+      <h2>{{ p.name.first }} {{ p.name.last }}</h2>
+
+      <p>Pays : {{ p.location.country }}</p>
+
+      <button type="button" @click="toggleContacts(p)">
+        Afficher / Masquer les contacts
+      </button>
+
+      <div v-if="contactsVisibles[p.id]">
+        <p v-if="tel">Téléphone : {{ p.phone }}</p>
+        <p>Email : {{ p.email }}</p>
+      </div>
+
+      <hr>
+    </div>
+
+    <p v-if="personnesFiltrees.length === 0">
+      Aucune personne ne correspond aux filtres.
+    </p>
+
+  </div>
+
+  <style>
+    .misEnForme {
+      background-color: lightblue;
+      padding: 15px;
+      margin: 10px 0;
+    }
+  </style>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
