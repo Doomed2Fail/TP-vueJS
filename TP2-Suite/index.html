@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>TP2 - Catalogue de livres</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+    <p>{{ nombreFavoris }} livre(s) favori(s)</p>
+
+    <h1>Catalogue de livres</h1>
+
+    <form @submit.prevent="ajouterLivre" class="form-ajout">
+      <h3>Ajouter un livre</h3>
+
+      <div>
+        <label>Titre :</label>
+        <input type="text" v-model.trim="newBook.title" placeholder="Titre" />
+      </div>
+
+      <div>
+        <label>Auteur :</label>
+        <input type="text" v-model.lazy="newBook.author" placeholder="Auteur" />
+      </div>
+
+      <div>
+        <label>Année :</label>
+        <input type="number" v-model.number="newBook.year" placeholder="Année" />
+      </div>
+
+      <div>
+        <label>Genre :</label>
+        <select v-model="newBook.genre">
+          <option value="">Sélectionnez un genre</option>
+          <option value="Génie logiciel">Génie logiciel</option>
+          <option value="Algorithmique">Algorithmique</option>
+          <option value="Littérature">Littérature</option>
+          <option value="Réseaux">Réseaux</option>
+          <option value="Développement web">Développement web</option>
+        </select>
+      </div>
+
+      <div>
+        <label>
+          <input type="checkbox" v-model="newBook.isFav" /> Favori
+        </label>
+      </div>
+
+      <div>
+        <label>Mots-clés :</label>
+        <input 
+          type="text" 
+          v-model="nouveauMotCle" 
+          @keydown.enter.prevent 
+          @keyup.enter="ajouterMotCle" 
+          placeholder="Taper un mot-clé puis Entrée" 
+        />
+        <div v-if="newBook.keywords.length">
+          <span class="chip" v-for="(mot, index) in newBook.keywords" :key="index">
+            {{ mot }}
+            <button type="button" @click="retirerMotCle(index)">×</button>
+          </span>
+        </div>
+      </div>
+
+      <button type="submit" :disabled="!formulaireValide">Ajouter</button>
+    </form>
+
+    <button class="btn-filtre" @click="afficherFavoris = !afficherFavoris">
+      Afficher uniquement les favoris
+    </button>
+
+    <div 
+      class="book" 
+      v-for="book in livresFiltres" 
+      :key="book.id" 
+      :class="{ favori: book.isFav }"
+      @click="toggleFavori(book)"
+    >
+      <h3>
+        {{ book.title }}
+        <span v-if="book.isFav" class="badge-favori">Favori</span>
+      </h3>
+      <p>{{ book.author }} ({{ book.year }})</p>
+
+      <div v-if="book.keywords && book.keywords.length">
+        <span class="chip" v-for="(mot, idx) in book.keywords" :key="idx">{{ mot }}</span>
+      </div>
+
+      <div class="actions">
+        <button @click.stop="toggleDetails(book)">Détails</button>
+        <button @click.stop="supprimerLivre(book)">Supprimer</button>
+      </div>
+
+      <p v-show="showDetails[book.id]">{{ book.genre }}</p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
