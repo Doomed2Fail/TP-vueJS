@@ -3,6 +3,7 @@
 Chaque TP est dans une branche :
 
 - [TP1 - Livres](https://github.com/Doomed2Fail/TP-vueJS/tree/TP1/tp1)
+- [TP2_suite - Suite du TP1](https://github.com/Doomed2Fail/TP-vueJS/tree/TP2_suite/tp2)
 - [TP1A - Budget](https://github.com/Doomed2Fail/TP-vueJS/tree/TP1A)
 - [TP1B - Stock](https://github.com/Doomed2Fail/TP-vueJS/tree/TP1B)
 - [TP1C - Notes](https://github.com/Doomed2Fail/TP-vueJS/tree/TP1C)
