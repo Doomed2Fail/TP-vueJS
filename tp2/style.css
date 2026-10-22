@@ -1,0 +1,88 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 640px;
+  margin: 40px auto;
+  color: #1b2430;
+}
+
+.form-ajout {
+  border: 1px solid #dde1d9;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  background: #fafafa;
+}
+
+.form-ajout div {
+  margin-bottom: 12px;
+}
+
+.form-ajout label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.form-ajout input[type="text"],
+.form-ajout input[type="number"],
+.form-ajout select {
+  width: 100%;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+
+.form-ajout input[type="checkbox"] {
+  display: inline;
+  width: auto;
+}
+
+.btn-filtre {
+  margin-bottom: 16px;
+}
+
+.book {
+  border: 1px solid #dde1d9;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.favori {
+  border-color: #caa53d;
+  background: #fbf6e6;
+}
+
+.badge-favori {
+  display: inline-block;
+  background: #caa53d;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 8px;
+}
+
+.chip {
+  display: inline-block;
+  background: #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-right: 6px;
+  margin-top: 4px;
+}
+
+.chip button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 4px;
+  font-weight: bold;
+}
+
+.actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
